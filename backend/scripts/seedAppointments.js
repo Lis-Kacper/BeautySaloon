@@ -18,8 +18,8 @@ function getRandomDateInNextMonth() {
   // Losuj dzień w przedziale od dziś do za miesiąc
   const randomDay = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 
-  // Ustaw losową godzinę w zakresie 9:00–17:30 (ostatni slot na 30 min)
-  const hour = 9 + Math.floor(Math.random() * 9); // 9–17
+  // Ustaw losową godzinę w zakresie 11:00–17:30 (ostatni slot na 30 min)
+  const hour = 11 + Math.floor(Math.random() * 7); // 11–17
   const minute = Math.random() < 0.5 ? 0 : 30; // 0 lub 30
 
   randomDay.setHours(hour, minute, 0, 0);
@@ -28,21 +28,34 @@ function getRandomDateInNextMonth() {
 
 async function main() {
   const howMany = 400; // Zmień na dowolną liczbę wizyt
-  for (let i = 0; i < howMany; i++) {
-    const startTime = getRandomDateInNextMonth();
-    const endTime = new Date(startTime.getTime() + 30 * 60000); // 30 minut
-    await prisma.appointment.create({
-      data: {
-        name: getRandom(names),
-        email: getRandom(emails),
-        phone: getRandom(phones),
-        service: getRandom(services),
-        startTime,
-        endTime,
+  console.log('Czyszczenie tabeli wizyt...');
+  await prisma.appointment.deleteMany();
+  let added = 0;
+  while (added < howMany) {
+    let startTime = getRandomDateInNextMonth();
+    let endTime = new Date(startTime.getTime() + 30 * 60000);
+    // Sprawdź, czy slot jest wolny
+    const conflict = await prisma.appointment.findFirst({
+      where: {
+        startTime: { lt: endTime },
+        endTime: { gt: startTime }
       }
     });
+    if (!conflict) {
+      await prisma.appointment.create({
+        data: {
+          name: getRandom(names),
+          email: getRandom(emails),
+          phone: getRandom(phones),
+          service: getRandom(services),
+          startTime,
+          endTime,
+        }
+      });
+      added++;
+    }
   }
-  console.log(`Dodano ${howMany} losowych wizyt!`);
+  console.log(`Dodano ${howMany} unikalnych wizyt!`);
 }
 
 main()
