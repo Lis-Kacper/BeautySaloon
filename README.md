@@ -26,7 +26,6 @@ System rezerwacji online dla salonu beauty, umożliwiający klientom rezerwację
 - Użyj przykładowych danych logowania:
   - **Login:** `admin`
   - **Hasło:** `admin123`
-  (lub inne, jeśli ustawiłeś własne dane w bazie)
 
 ## Seedowanie bazy danymi testowymi
 - Do generowania dużej liczby losowych wizyt służy skrypt: `backend/scripts/seedAppointments.js`.
