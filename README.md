@@ -14,16 +14,16 @@ System rezerwacji online dla salonu beauty, umożliwiający klientom rezerwację
 - **React Router** – routing między stronami
 - **Tailwind CSS** – nowoczesne stylowanie
 - **React Big Calendar** – widok kalendarza rezerwacji
-- **Netlify** – hosting frontendu w chmurze (darmowy, automatyczny deploy z GitHuba)
+- **Netlify** – hosting frontendu w chmurze 
 
 ### Backend
 - **Node.js + Express** – REST API
 - **Prisma ORM** – obsługa bazy danych
 - **Nodemailer** – wysyłka powiadomień e-mail
-- **Render.com** – hosting backendu w chmurze (darmowy, automatyczny deploy z GitHuba)
+- **Render.com** – hosting backendu w chmurze 
 
 ### Baza danych
-- **Supabase** – zarządzany PostgreSQL w chmurze (darmowy plan)
+- **Supabase** – zarządzany PostgreSQL w chmurze 
 
 ## Logowanie do panelu administratora
 - Wejdź na stronę i kliknij "Panel administratora" lub przejdź do `/login`.
@@ -49,10 +49,9 @@ System rezerwacji online dla salonu beauty, umożliwiający klientom rezerwację
 - Nowoczesny, responsywny interfejs
 
 ## Deployment (chmurowy)
-- **Frontend:** Netlify (darmowy hosting, automatyczny deploy z GitHuba)
-- **Backend:** Render.com (darmowy hosting, automatyczny deploy z GitHuba)
-- **Baza danych:** Supabase (darmowy PostgreSQL)
+- **Frontend:** Netlify 
+- **Backend:** Render.com 
+- **Baza danych:** Supabase 
 
----
 
-> Projekt stworzony na zaliczenie – pełna dokumentacja i kod źródłowy dostępne w repozytorium. 
+
