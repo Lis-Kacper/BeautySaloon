@@ -6,6 +6,7 @@ import parse from 'date-fns/parse';
 import startOfWeek from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { APP_VERSION } from '../version';
 
 const locales = {
   'en-US': require('date-fns/locale/en-US')
@@ -105,6 +106,7 @@ function Booking() {
         throw new Error(data.error || 'Nie udało się zarezerwować wizyty.');
       }
       setSuccess('Wizyta została zarezerwowana!');
+      handleDateSelect(selectedDate);
       setTimeout(() => {
         setShowPopup(false);
         setSuccess('');
@@ -264,6 +266,10 @@ function Booking() {
           </div>
         </div>
       )}
+      {/* Wersja aplikacji */}
+      <div className="text-xs text-gray-400 mt-4 text-center">
+        Wersja: {APP_VERSION}
+      </div>
     </div>
   );
 }

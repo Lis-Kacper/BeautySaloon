@@ -10,21 +10,37 @@ System rezerwacji online dla salonu beauty, umożliwiający klientom rezerwację
 - **React Router** – routing między stronami
 - **Tailwind CSS** – nowoczesne stylowanie
 - **React Big Calendar** – widok kalendarza rezerwacji
-- **Netlify** (lub Vercel) – hosting frontendu w chmurze (darmowy, automatyczny deploy z GitHuba)
+- **Netlify** – hosting frontendu w chmurze (darmowy, automatyczny deploy z GitHuba)
 
 ### Backend
 - **Node.js + Express** – REST API
 - **Prisma ORM** – obsługa bazy danych
 - **Nodemailer** – wysyłka powiadomień e-mail
-- **Render.com** (lub Railway.app) – hosting backendu w chmurze (darmowy, automatyczny deploy z GitHuba)
+- **Render.com** – hosting backendu w chmurze (darmowy, automatyczny deploy z GitHuba)
 
 ### Baza danych
-- **Supabase** (lub Neon.tech) – zarządzany PostgreSQL w chmurze (darmowy plan)
+- **Supabase** – zarządzany PostgreSQL w chmurze (darmowy plan)
+
+## Logowanie do panelu administratora
+- Wejdź na stronę i kliknij "Panel administratora" lub przejdź do `/login`.
+- Użyj przykładowych danych logowania:
+  - **Login:** `admin`
+  - **Hasło:** `admin123`
+  (lub inne, jeśli ustawiłeś własne dane w bazie)
+
+## Seedowanie bazy danymi testowymi
+- Do generowania dużej liczby losowych wizyt służy skrypt: `backend/scripts/seedAppointments.js`.
+- Możesz ustawić liczbę wizyt w zmiennej `howMany` w tym pliku.
+- Uruchomienie skryptu:
+  ```sh
+  node backend/scripts/seedAppointments.js
+  ```
+- Wizyty będą generowane na przestrzeni najbliższego miesiąca, tylko w godzinach 9:00–17:30.
 
 ## Jak to działa?
-1. **Klient** wchodzi na stronę (frontend na Netlify/Vercel), widzi kalendarz i dostępne terminy.
+1. **Klient** wchodzi na stronę (frontend na Netlify), widzi kalendarz i dostępne terminy.
 2. Po wybraniu terminu i usługi, klient wypełnia formularz rezerwacji.
-3. **Frontend** wysyła żądanie do **backendu** (Render/Railway), który sprawdza dostępność i zapisuje wizytę w bazie (Supabase/Neon).
+3. **Frontend** wysyła żądanie do **backendu** (Render), który sprawdza dostępność i zapisuje wizytę w bazie (Supabase).
 4. Po udanej rezerwacji klient otrzymuje e-mail z potwierdzeniem.
 5. **Administrator** loguje się do panelu admina, gdzie może przeglądać, edytować i anulować wizyty.
 6. Wszystkie dane przechowywane są bezpiecznie w chmurze, a komunikacja odbywa się przez REST API.
@@ -38,9 +54,9 @@ System rezerwacji online dla salonu beauty, umożliwiający klientom rezerwację
 - Nowoczesny, responsywny interfejs
 
 ## Deployment (chmurowy)
-- **Frontend:** Netlify lub Vercel (darmowy hosting, automatyczny deploy z GitHuba)
-- **Backend:** Render.com lub Railway.app (darmowy hosting, automatyczny deploy z GitHuba)
-- **Baza danych:** Supabase lub Neon.tech (darmowy PostgreSQL)
+- **Frontend:** Netlify (darmowy hosting, automatyczny deploy z GitHuba)
+- **Backend:** Render.com (darmowy hosting, automatyczny deploy z GitHuba)
+- **Baza danych:** Supabase (darmowy PostgreSQL)
 
 ---
 
