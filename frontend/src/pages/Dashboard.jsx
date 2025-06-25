@@ -52,7 +52,7 @@ function Dashboard() {
       setError('');
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:3001/api/appointments', {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/appointments`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -98,7 +98,7 @@ function Dashboard() {
     setError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:3001/api/appointments', {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/appointments`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -121,7 +121,7 @@ function Dashboard() {
     setActionError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3001/api/appointments/${selectedEvent.id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/appointments/${selectedEvent.id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -149,7 +149,7 @@ function Dashboard() {
     setActionError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3001/api/appointments/${selectedEvent.id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/appointments/${selectedEvent.id}`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,

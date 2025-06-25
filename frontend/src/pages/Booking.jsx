@@ -61,7 +61,7 @@ function Booking() {
     // Pobierz dostępne sloty z backendu
     try {
       const dateStr = selected.toISOString().slice(0, 10);
-      const res = await fetch(`http://localhost:3001/api/availability?date=${dateStr}`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/availability?date=${dateStr}`);
       const slots = await res.json();
       if (Array.isArray(slots) && slots.length > 0) {
         setAvailableSlots(slots);
@@ -89,7 +89,7 @@ function Booking() {
       return;
     }
     try {
-      const response = await fetch('http://localhost:3001/api/appointments', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/appointments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
