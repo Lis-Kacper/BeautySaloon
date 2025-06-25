@@ -82,14 +82,10 @@ function Dashboard() {
   const formatDateTimeRange = (start, end) => {
     const startDate = new Date(start);
     const endDate = new Date(end);
-    const date = startDate.toLocaleDateString('pl-PL', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    });
-    const startTime = startDate.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
-    const endTime = endDate.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
-    return `${date}, ${startTime} - ${endTime}`;
+    // Użyj toLocaleString z pl-PL i wymuszoną strefą czasową użytkownika
+    const startStr = startDate.toLocaleString('pl-PL', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+    const endStr = endDate.toLocaleString('pl-PL', { hour: '2-digit', minute: '2-digit' });
+    return `${startStr} - ${endStr}`;
   };
 
   // Funkcja do odświeżenia wizyt po edycji/usunięciu
