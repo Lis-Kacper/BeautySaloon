@@ -27,6 +27,7 @@ System rezerwacji online dla salonu beauty, umożliwiający klientom rezerwację
   - **Login:** `admin`
   - **Hasło:** `admin123`
 
+
 ## Seedowanie bazy danymi testowymi
 - Do generowania dużej liczby losowych wizyt służy skrypt: `backend/scripts/seedAppointments.js`.
 - Możesz ustawić liczbę wizyt w zmiennej `howMany` w tym pliku.
