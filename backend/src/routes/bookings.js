@@ -37,8 +37,7 @@ router.get('/availability', async (req, res) => {
       // Check if slot is available
       const isAvailable = !appointments.some(
         app => 
-          (app.startTime <= currentSlot && app.endTime > currentSlot) ||
-          (app.startTime < slotEnd && app.endTime >= slotEnd)
+          (app.startTime < slotEnd && app.endTime > currentSlot)
       );
 
       if (isAvailable) {

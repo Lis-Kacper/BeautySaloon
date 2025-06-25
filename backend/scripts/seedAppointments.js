@@ -1,50 +1,55 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-const names = [
-  'Jan Kowalski', 'Anna Nowak', 'Piotr Zieliński', 'Katarzyna Wiśniewska', 'Marek Lewandowski',
-  'Agnieszka Wójcik', 'Tomasz Kamiński', 'Ewa Kaczmarek', 'Paweł Mazur', 'Magdalena Dąbrowska',
-  'Kamil Jabłoński', 'Joanna Król', 'Michał Pawlak', 'Aleksandra Szymańska', 'Grzegorz Baran',
-  'Karolina Górska', 'Łukasz Rutkowski', 'Natalia Sikora', 'Marcin Piątek', 'Patrycja Lis'
-];
-const emails = names.map(n => n.toLowerCase().replace(/ /g, '.') + '@test.com');
-const phones = Array.from({length: 20}, (_, i) => '500100' + (100 + i));
 const services = ['WAXING', 'MANICURE', 'MASSAGE'];
+const names = ['Anna Nowak', 'Jan Kowalski', 'Maria Wiśniewska', 'Piotr Zieliński', 'Katarzyna Lewandowska'];
+const emails = ['anna@test.com', 'jan@test.com', 'maria@test.com', 'piotr@test.com', 'kasia@test.com'];
+const phones = ['123456789', '987654321', '555666777', '111222333', '444555666'];
 
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+function getRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
 }
 
-async function seed() {
-  const today = new Date();
-  today.setHours(9, 0, 0, 0);
-  const slotsPerDay = 16; // 09:00-17:00 co 30 min
-  let usedSlots = new Set();
-  for (let i = 0; i < 20; i++) {
-    let dayOffset, slotIdx, slotKey;
-    do {
-      dayOffset = getRandomInt(1, 21); // 1-21 dni w przyszłość
-      slotIdx = getRandomInt(0, slotsPerDay - 1);
-      slotKey = `${dayOffset}-${slotIdx}`;
-    } while (usedSlots.has(slotKey));
-    usedSlots.add(slotKey);
-    const start = new Date(today);
-    start.setDate(start.getDate() + dayOffset);
-    start.setHours(9 + Math.floor(slotIdx / 2), slotIdx % 2 === 0 ? 0 : 30, 0, 0);
-    const end = new Date(start.getTime() + 30 * 60000);
+function getRandomDateInNextMonth() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const end = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate());
+
+  // Losuj dzień w przedziale od dziś do za miesiąc
+  const randomDay = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+
+  // Ustaw losową godzinę w zakresie 9:00–17:30 (ostatni slot na 30 min)
+  const hour = 9 + Math.floor(Math.random() * 9); // 9–17
+  const minute = Math.random() < 0.5 ? 0 : 30; // 0 lub 30
+
+  randomDay.setHours(hour, minute, 0, 0);
+  return randomDay;
+}
+
+async function main() {
+  const howMany = 400; // Zmień na dowolną liczbę wizyt
+  for (let i = 0; i < howMany; i++) {
+    const startTime = getRandomDateInNextMonth();
+    const endTime = new Date(startTime.getTime() + 30 * 60000); // 30 minut
     await prisma.appointment.create({
       data: {
-        name: names[i % names.length],
-        email: emails[i % emails.length],
-        phone: phones[i % phones.length],
-        service: services[getRandomInt(0, services.length - 1)],
-        startTime: start,
-        endTime: end
+        name: getRandom(names),
+        email: getRandom(emails),
+        phone: getRandom(phones),
+        service: getRandom(services),
+        startTime,
+        endTime,
       }
     });
   }
-  await prisma.$disconnect();
-  console.log('Dodano 20 losowych wizyt!');
+  console.log(`Dodano ${howMany} losowych wizyt!`);
 }
 
-seed(); 
+main()
+  .catch(e => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  }); 

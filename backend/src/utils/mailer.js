@@ -37,13 +37,20 @@ const formatDate = (date) => {
   });
 };
 
+const serviceLabels = {
+  WAXING: 'Depilacja woskiem',
+  MANICURE: 'Manicure',
+  MASSAGE: 'Masaż'
+};
+
 const sendConfirmationEmail = async ({ to, appointment }) => {
+  const serviceLabel = serviceLabels[appointment.service] || appointment.service;
   const emailContent = `
     <h1>Potwierdzenie rezerwacji wizyty</h1>
     <p>Szanowna Pani/Szanowny Panie ${appointment.name},</p>
     <p>Twoja wizyta została potwierdzona na:</p>
     <ul>
-      <li><strong>Usługa:</strong> ${appointment.service}</li>
+      <li><strong>Usługa:</strong> ${serviceLabel}</li>
       <li><strong>Data i godzina:</strong> ${formatDate(appointment.startTime)}</li>
       <li><strong>Czas trwania:</strong> 30 minut</li>
     </ul>
