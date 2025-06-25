@@ -29,7 +29,7 @@ const serviceLabels = {
 // Customowy event do widoku miesiąca
 function MonthEvent({ event }) {
   return (
-    <span className="font-medium text-pink-700">
+    <span className="font-medium text-pink-300">
       {serviceLabels[event.resource?.service] || event.resource?.service || ''} ({event.resource ? event.resource.name : ''})
     </span>
   );

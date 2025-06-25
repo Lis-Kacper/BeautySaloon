@@ -6,6 +6,22 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 const router = express.Router();
 
+// Funkcja pomocnicza do tworzenia daty w lokalnej strefie czasowej
+function createLocalDate(dateString) {
+  // Jeśli to już pełna data ISO, zwróć ją bez zmian
+  if (dateString.includes('T')) {
+    return new Date(dateString);
+  }
+  
+  // Jeśli to tylko data (YYYY-MM-DD), dodaj czas lokalny
+  return new Date(dateString + 'T00:00:00');
+}
+
+// Funkcja do tworzenia daty z czasem w lokalnej strefie czasowej
+function createLocalDateTime(dateString, timeString) {
+  return new Date(`${dateString}T${timeString}`);
+}
+
 // Get available time slots for a specific date
 router.get('/availability', async (req, res) => {
   const { date } = req.query;
@@ -14,8 +30,9 @@ router.get('/availability', async (req, res) => {
   }
 
   try {
-    const startOfDay = new Date(`${date}T09:00:00`);
-    const endOfDay = new Date(`${date}T17:00:00`);
+    // Tworzenie dat z lokalną strefą czasową zamiast UTC
+    const startOfDay = createLocalDateTime(date, '09:00:00');
+    const endOfDay = createLocalDateTime(date, '17:00:00');
 
     // Get all appointments for the specified date
     const appointments = await prisma.appointment.findMany({
@@ -52,7 +69,8 @@ router.get('/availability', async (req, res) => {
 
     res.json(slots);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to get availability' });
+    console.error('Błąd w /api/availability:', error);
+    res.status(500).json({ error: 'Failed to get availability', details: error.message });
   }
 });
 
@@ -66,20 +84,24 @@ router.post('/appointments', async (req, res) => {
   }
 
   try {
+    // Tworzenie dat bez automatycznej konwersji na UTC
+    const appointmentStartTime = new Date(startTime);
+    const appointmentEndTime = new Date(endTime);
+
     // Check if the slot is available
     const conflictingAppointment = await prisma.appointment.findFirst({
       where: {
         OR: [
           {
             AND: [
-              { startTime: { lte: new Date(startTime) } },
-              { endTime: { gt: new Date(startTime) } },
+              { startTime: { lte: appointmentStartTime } },
+              { endTime: { gt: appointmentStartTime } },
             ],
           },
           {
             AND: [
-              { startTime: { lt: new Date(endTime) } },
-              { endTime: { gte: new Date(endTime) } },
+              { startTime: { lt: appointmentEndTime } },
+              { endTime: { gte: appointmentEndTime } },
             ],
           },
         ],
@@ -97,8 +119,8 @@ router.post('/appointments', async (req, res) => {
         email,
         phone,
         service,
-        startTime: new Date(startTime),
-        endTime: new Date(endTime),
+        startTime: appointmentStartTime,
+        endTime: appointmentEndTime,
       },
     });
 
@@ -108,8 +130,8 @@ router.post('/appointments', async (req, res) => {
       appointment: {
         ...appointment,
         service,
-        startTime: new Date(startTime),
-        endTime: new Date(endTime),
+        startTime: appointmentStartTime,
+        endTime: appointmentEndTime,
       },
     });
 
@@ -128,7 +150,15 @@ router.get('/appointments', verifyToken, async (req, res) => {
         startTime: 'asc',
       },
     });
-    res.json(appointments);
+    
+    // Zwracamy daty w formacie ISO, ale zachowując lokalną strefę czasową
+    const appointmentsWithLocalTime = appointments.map(appointment => ({
+      ...appointment,
+      startTime: appointment.startTime.toISOString(),
+      endTime: appointment.endTime.toISOString(),
+    }));
+    
+    res.json(appointmentsWithLocalTime);
   } catch (error) {
     res.status(500).json({ error: 'Failed to get appointments' });
   }
@@ -150,10 +180,19 @@ router.patch('/appointments/:id', verifyToken, async (req, res) => {
   try {
     const id = parseInt(req.params.id, 10);
     const { name, email, phone, service, startTime, endTime } = req.body;
+    
     const updated = await prisma.appointment.update({
       where: { id },
-      data: { name, email, phone, service, startTime: new Date(startTime), endTime: new Date(endTime) }
+      data: { 
+        name, 
+        email, 
+        phone, 
+        service, 
+        startTime: new Date(startTime), 
+        endTime: new Date(endTime) 
+      }
     });
+    
     res.json(updated);
   } catch (error) {
     res.status(500).json({ error: 'Failed to update appointment', details: error.message });
