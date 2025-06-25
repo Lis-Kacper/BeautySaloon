@@ -3,6 +3,10 @@
 ## Opis projektu
 System rezerwacji online dla salonu beauty, umożliwiający klientom rezerwację wizyt przez kalendarz, a administratorowi zarządzanie wszystkimi wizytami. Projekt zawiera nowoczesny frontend, bezpieczny backend oraz bazę danych w chmurze.
 
+## Link do strony na Netlify 
+- **https://salonbeauty2137.netlify.app**
+
+
 ## Użyte technologie
 
 ### Frontend
@@ -27,15 +31,6 @@ System rezerwacji online dla salonu beauty, umożliwiający klientom rezerwację
   - **Login:** `admin`
   - **Hasło:** `admin123`
 
-
-## Seedowanie bazy danymi testowymi
-- Do generowania dużej liczby losowych wizyt służy skrypt: `backend/scripts/seedAppointments.js`.
-- Możesz ustawić liczbę wizyt w zmiennej `howMany` w tym pliku.
-- Uruchomienie skryptu:
-  ```sh
-  node backend/scripts/seedAppointments.js
-  ```
-- Wizyty będą generowane na przestrzeni najbliższego miesiąca, tylko w godzinach 9:00–17:30.
 
 ## Jak to działa?
 1. **Klient** wchodzi na stronę (frontend na Netlify), widzi kalendarz i dostępne terminy.
