@@ -116,8 +116,6 @@ function Booking() {
     }
 
     try {
-      
-
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/appointments`, {
         method: 'POST',
         headers: {
@@ -138,16 +136,17 @@ function Booking() {
         throw new Error(data.error || 'Nie udało się zarezerwować wizyty.');
       }
 
-      
+      setShowPopup(false);
       setSuccess('Wizyta została zarezerwowana!');
-      
-      // Odśwież dostępne sloty po udanej rezerwacji
-      handleDateSelect(selectedDate);
-      
-      setTimeout(() => {
-        setShowPopup(false);
-        setSuccess('');
-      }, 2000);
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        service: services[0].value,
+        time: ''
+      });
+      setAvailableSlots([]);
+      setTimeout(() => setSuccess(''), 4000);
     } catch (error) {
       console.error('Błąd rezerwacji:', error); // Debug
       setError(error.message);
@@ -315,6 +314,13 @@ function Booking() {
               </form>
             )}
           </div>
+        </div>
+      )}
+
+      {/* Komunikat o sukcesie na głównej stronie */}
+      {success && (
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-100 border border-green-400 text-green-700 px-6 py-3 rounded shadow-lg z-50 text-lg font-semibold">
+          {success}
         </div>
       )}
 
