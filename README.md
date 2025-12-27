@@ -1,57 +1,59 @@
-# Beauty Saloon – System rezerwacji wizyt
+# 👁️👄👁️ Beauty Salon – Appointment Booking System
 
-## Opis projektu
-System rezerwacji online dla salonu beauty, umożliwiający klientom rezerwację wizyt przez kalendarz, a administratorowi zarządzanie wszystkimi wizytami. Projekt zawiera nowoczesny frontend, bezpieczny backend oraz bazę danych w chmurze.
+## Project Description
 
-## Link do strony na Netlify 
-- **https://salonbeauty2137.netlify.app**
+An online booking system for a beauty salon that allows clients to book appointments via a calendar and enables the administrator to manage all visits. The project features a modern frontend, a secure backend, and a cloud-based database.
 
-
-## Użyte technologie
+## Technologies Used
 
 ### Frontend
-- **React** – budowa interfejsu użytkownika
-- **React Router** – routing między stronami
-- **Tailwind CSS** – nowoczesne stylowanie
-- **React Big Calendar** – widok kalendarza rezerwacji
-- **Netlify** – hosting frontendu w chmurze 
+
+* **React** – building the user interface
+* **React Router** – navigation between pages
+* **Tailwind CSS** – modern styling
+* **React Big Calendar** – booking calendar view
+* **Netlify** – cloud hosting for the frontend
 
 ### Backend
-- **Node.js + Express** – REST API
-- **Prisma ORM** – obsługa bazy danych
-- **Nodemailer** – wysyłka powiadomień e-mail
-- **Render.com** – hosting backendu w chmurze 
 
-### Baza danych
-- **Supabase** – zarządzany PostgreSQL w chmurze 
+* **Node.js + Express** – REST API
+* **Prisma ORM** – database management
+* **Nodemailer** – email notification service
+* **Render.com** – cloud hosting for the backend
 
-## Logowanie do panelu administratora
-- Wejdź na stronę i kliknij "Panel administratora" lub przejdź do `/login`.
-- Użyj przykładowych danych logowania:
-  - **Login:** `admin`
-  - **Hasło:** `admin123`
+### Database
 
+* **Supabase** – managed PostgreSQL in the cloud
 
-## Jak to działa?
-1. **Klient** wchodzi na stronę (frontend na Netlify), widzi kalendarz i dostępne terminy.
-2. Po wybraniu terminu i usługi, klient wypełnia formularz rezerwacji.
-3. **Frontend** wysyła żądanie do **backendu** (Render), który sprawdza dostępność i zapisuje wizytę w bazie (Supabase).
-4. Po udanej rezerwacji klient otrzymuje e-mail z potwierdzeniem.
-5. **Administrator** loguje się do panelu admina, gdzie może przeglądać, edytować i anulować wizyty.
-6. Wszystkie dane przechowywane są bezpiecznie w chmurze, a komunikacja odbywa się przez REST API.
+## Administrator Panel Login
 
-## Funkcjonalności
-- Rezerwacja wizyt przez kalendarz (tylko wolne sloty)
-- Powiadomienia e-mail o rezerwacji
-- Panel admina do zarządzania wizytami
-- Logowanie admina (JWT)
-- Walidacja danych i bezpieczeństwo
-- Nowoczesny, responsywny interfejs
-
-## Deployment (chmurowy)
-- **Frontend:** Netlify 
-- **Backend:** Render.com 
-- **Baza danych:** Supabase 
+* Visit the website and click "Administrator Panel" or navigate to `/login`.
+* Use the following sample credentials:
+* **Login:** `admin`
+* **Password:** `admin123`
 
 
 
+## How It Works
+
+1. The **Client** visits the website (frontend hosted on Netlify) and views the calendar with available slots.
+2. After selecting a date and service, the client completes the booking form.
+3. The **Frontend** sends a request to the **Backend** (hosted on Render), which verifies availability and saves the appointment to the database (Supabase).
+4. Upon successful booking, the client receives a confirmation email.
+5. The **Administrator** logs into the admin panel to view, edit, or cancel appointments.
+6. All data is stored securely in the cloud, and communication is handled via a REST API.
+
+## Features
+
+* Appointment booking via calendar (available slots only)
+* Automatic email notifications for bookings
+* Admin panel for appointment management
+* Admin authentication (JWT)
+* Data validation and security measures
+* Modern, responsive user interface (Mobile/Desktop)
+
+## Deployment (Cloud-based)
+
+* **Frontend:** Netlify
+* **Backend:** Render.com
+* **Database:** Supabase
